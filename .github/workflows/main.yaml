@@ -6,10 +6,17 @@ on:
 
 jobs:
   build:
-    run-on: node:lts-apline3.23
+    runs-on: node:lts-apline3.23
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: npm install
       - name: Run tests
         run: npm test
+      - name: Save coverage
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 
+        with:
+          name: coverage      # L'étiquette de notre boîte
+          path: coverage/     # Ce qu'on met dedans
+          retention-days: 1   # Garde 1 jour (suffisant pour CI)
+
