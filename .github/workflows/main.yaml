@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: node:lts-apline3.23
+    runs-on: node:lts-alpine3.23
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
