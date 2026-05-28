@@ -41,3 +41,23 @@ jobs:
             coverage/
             test-results/
           retention-days: 7       # Garde 7 jours pour analyse
+
+      - name: Comment PR with Jest results
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const jestResults = fs.readFileSync('jest-results.json', 'utf8');
+            const commentBody = `
+### Jest Test Results
+\`\`\`json
+${jestResults}
+\`\`\`
+            `;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody,
+            });
